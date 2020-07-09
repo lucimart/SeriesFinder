@@ -5,9 +5,12 @@
     margin: 20px 20px 0px 20px;
     min-width: 90vw;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     & .favorites {
+      position: fixed;
+      z-index: 10;
+      left: 20px;
       & object {
         width: 32px;
         transform: rotate(90deg);
@@ -39,13 +42,104 @@
       }
     }
   }
+  & .favPanel {
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 220px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    background-color: $color-polarNight-dark;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    & .clearMenuBackground {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: 70px;
+      background-color: $color-polarNight-dark;
+      z-index: 5;
+      -webkit-box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 1);
+      -moz-box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 1);
+      box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 1);
+    }
+    & .clearAll {
+      border: 4px solid $color-snowStorm-brighter;
+      border-radius: 25px;
+      font-size: 0.7rem;
+      padding: 5px;
+      position: fixed;
+      top: 20px;
+      left: 10px;
+      z-index: 10;
+    }
+    & .favList {
+      width: 200px;
+      justify-content: center;
+      position: absolute;
+      top: 80px;
+      display: grid;
+      grid-template-columns: 220px;
+      grid-gap: 0px 20px;
+      & li {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: $color-frost-bluest;
+        border-radius: 25px;
+        & p {
+          min-height: 4rem;
+          max-width: 205px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        & img {
+          width: 220px;
+          border-radius: 0 0 25px 25px;
+        }
+      }
+    }
+  }
+  & .transparentPanel {
+    background-color: rgba($color-snowStorm-bright, 0.1);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+  }
+}
+
+.rotFav {
+  transform: rotate(180deg);
+  left: 180px !important;
 }
 
 @include tablet {
   .header {
     & form {
-      margin: 32px 32px;
+      margin-right: 32px;
+      margin-left: 32px;
       min-width: 85vw;
+      & .favorites {
+        left: 5vw;
+      }
     }
   }
+}
+
+.scaleFaved {
+  transform: scale(0.8);
 }
