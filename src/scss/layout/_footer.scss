@@ -1,8 +1,39 @@
-.page__footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100vw;
-  padding: 1rem;
-  color: $color-secondary;
+.footer {
+  display: flex;
+  justify-content: center;
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & object {
+      margin-bottom: 20px;
+      height: 64px;
+      pointer-events: none;
+      animation-name: bounce;
+      animation-duration: 3s;
+      animation-timing-function: ease-in;
+      animation-iteration-count: infinite;
+      position: relative;
+    }
+    & p {
+      text-align: center;
+    }
+  }
+}
+
+.goTopIcon {
+  fill: $color-snowStorm-brighter;
+}
+
+@keyframes bounce {
+  0% {
+    bottom: 0px;
+  }
+  50% {
+    bottom: 5px;
+  }
+  100% {
+    bottom: 0px;
+  }
 }
