@@ -4,27 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Series Finder</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./assets/css/main.css" />
     <link rel="icon" href="./assets/images/favicon.png" />
   </head>
 
   <body>
-	  <header></header>
+    <header class="header">
+      <form>
+        <button class="favorites" type="button">
+          <object type="image/svg+xml" data="./assets/images/flechita.svg">
+          </object>
+        </button>
+        <div class="searchContainer">
+          <input placeholder="Pokemon" class="js-input" type="text" />
+          <button type="submit" class="js-search search">
+            <object type="image/svg+xml" data="./assets/images/lupa.svg"> </object>
+          </button>
+        </div>
+      </form>
+    </header>
 
-	  <div class="hero">
-  	  <h1>series finder</h1>
-  	</div>
-
-      <main></main>
-
-      <footer class="footer">
-        <a class="footer__container" href="#">
-          <object type="image/svg+xml" data="./assets/images/flechita.svg"> </object>
-          <p>GO TO THE TOP!</p>
-        </a>
-      </footer>
-
+    <div class="hero">
+      <h1>series finder</h1>
     </div>
+
+    <main class="main js-main">
+      <small class="main__small js-small"
+        >Use the search bar to explore series.</small
+      >
+    </main>
+
+    <footer class="footer">
+      <a class="footer__container" href="#">
+        <object type="image/svg+xml" data="./assets/images/flechita.svg"> </object>
+        <p>GO TO THE TOP!</p>
+      </a>
+    </footer>
+
+    <script type="text/javascript" src="./assets/js/main.js"></script>
   </body>
 </html>
