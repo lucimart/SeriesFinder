@@ -176,9 +176,8 @@ function cloudsIniPos(isGen) {
     i++
   ) {
     const cloudType = randomInRangeInt(1, 4);
-    const cloudEl = document.createElement("object");
-    cloudEl.setAttribute("type", "image/svg+xml");
-    cloudEl.setAttribute("data", `./assets/images/cloud${cloudType}.svg`);
+    const cloudEl = document.createElement("img");
+    cloudEl.setAttribute("src", `./assets/images/cloud${cloudType}.svg`);
     cloudEl.classList.add("js-cloud", "cloud");
     cloudsElem.appendChild(cloudEl);
     if (isGen) {
@@ -226,9 +225,8 @@ function starsIniPos() {
   const opacMax = 0.35;
   for (let i = 0; i < randomInRangeInt(minStars, maxStars); i++) {
     const starType = randomInRangeInt(1, 4);
-    const starEl = document.createElement("object");
-    starEl.setAttribute("type", "image/svg+xml");
-    starEl.setAttribute("data", `./assets/images/star${starType}.svg`);
+    const starEl = document.createElement("img");
+    starEl.setAttribute("src", `./assets/images/star${starType}.svg`);
     starEl.classList.add("js-star", "star", `star${starType}`);
     starsElem.appendChild(starEl);
   }
