@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   &__container {
+    z-index: 2;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,16 +27,4 @@
 
 .goTopIcon {
   fill: $color-snowStorm-brighter;
-}
-
-@keyframes bounce {
-  0% {
-    bottom: 0px;
-  }
-  50% {
-    bottom: 5px;
-  }
-  100% {
-    bottom: 0px;
-  }
 }

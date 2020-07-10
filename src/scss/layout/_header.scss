@@ -2,12 +2,14 @@
   display: flex;
   justify-content: center;
   & form {
+    z-index: 3;
     margin: 20px 20px 0px 20px;
     min-width: 90vw;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     & .favorites {
+      transition: 0.2s ease-in;
       position: fixed;
       z-index: 10;
       left: 20px;
@@ -43,6 +45,8 @@
     }
   }
   & .favPanel {
+    transition: 0.2s ease-in;
+    transform: translateX(-220px);
     overflow-y: scroll;
     -ms-overflow-style: none; /* Internet Explorer 10+ */
     scrollbar-width: none; /* Firefox */
@@ -98,7 +102,8 @@
         background-color: $color-frost-bluest;
         border-radius: 25px;
         & p {
-          min-height: 4rem;
+          transform: translateY(-1rem);
+          min-height: 3rem;
           max-width: 205px;
           display: flex;
           justify-content: center;
@@ -131,11 +136,6 @@
   }
 }
 
-.rotFav {
-  transform: rotate(180deg);
-  left: 180px !important;
-}
-
 @include tablet {
   .header {
     & form {
@@ -151,4 +151,11 @@
 
 .scaleFaved {
   transform: scale(0.8);
+}
+
+.defaultFavAnimation {
+  animation-name: glow;
+  animation-duration: 5s;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
 }

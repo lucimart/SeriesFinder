@@ -1,6 +1,11 @@
 <header class="header">
   <form>
-    <button class="favorites js-favButton" type="button">
+    <div class="favPanel js-favPanel">
+      <div class="clearMenuBackground"></div>
+      <button type="button" class="clearAll js-clearAll">CLEAR ALL</button>
+      <ul class="favList js-favList"></ul>
+    </div>
+    <button class="favorites js-favButton defaultFavAnimation" type="button">
       <object type="image/svg+xml" data="./assets/images/flechita.svg">
       </object>
     </button>
@@ -11,9 +16,4 @@
       </button>
     </div>
   </form>
-  <div class="favPanel js-favPanel hidden">
-    <div class="clearMenuBackground"></div>
-    <button type="button" class="clearAll js-clearAll">CLEAR ALL</button>
-    <ul class="favList js-favList"></ul>
-  </div>
 </header>

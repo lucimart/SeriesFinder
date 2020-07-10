@@ -6,6 +6,7 @@ body {
 }
 
 .main {
+  z-index: 2;
   min-height: 60vh;
   display: flex;
   flex-flow: row;
@@ -13,12 +14,14 @@ body {
   padding-left: 10px;
   padding-right: 10px;
   &__small {
+    z-index: 2;
     align-self: center;
     justify-self: center;
     color: $color-frost-bluest;
     text-align: center;
   }
   & ul {
+    z-index: 2;
     display: grid;
     grid-gap: 20px 20px;
     grid-template-columns: 220px;
@@ -31,7 +34,7 @@ body {
       background-color: $color-frost-bluest;
       border-radius: 25px;
       & p {
-        min-height: 4rem;
+        min-height: 7rem;
         max-width: 205px;
         display: flex;
         justify-content: center;
@@ -57,11 +60,4 @@ body {
       grid-template-columns: 220px 220px 220px 220px;
     }
   }
-}
-.hidden {
-  display: none !important;
-}
-.fav {
-  background-color: $color-snowStorm-brighter !important;
-  color: $color-frost-bluest;
 }

@@ -16,6 +16,9 @@ let favs = [];
 //script scope created elements
 const listSeriesElem = document.createElement("ul");
 listSeriesElem.classList.add("js-listSeries");
+
+//bonus clouds
+const cloudsElem = document.querySelector(".clouds");
 //This function searches on the API whatever is in the input and calls paintSeries()
 function searchHandler(event) {
   if (localStorage.getItem("favIdArr"))
@@ -74,6 +77,7 @@ function appendSerieToSerieList(serie, isFavList) {
   if (img) serieImgElem.setAttribute("src", `${isFavList ? img : img.medium}`);
   else
     serieImgElem.src = `https://via.placeholder.com/210x295/ffffff/666666/?text=TV`;
+  serieImgElem.setAttribute("alt", `Poster of ${name}`);
   elem.appendChild(serieNameElem);
   elem.appendChild(serieImgElem);
   if (!isFavList && isSerieFaved(elem, favs)) elem.classList.add("fav");
@@ -117,7 +121,8 @@ function indexOfSerieInFav(serie, favArr) {
 //This function toggles different classes corresponding the fav button interaction in the header
 function favButtonHandler() {
   favButton.classList.toggle("rotFav");
-  favPanel.classList.toggle("hidden");
+  favButton.classList.toggle("defaultFavAnimation");
+  favPanel.classList.toggle("favPanelTransition");
 }
 //This function handles the event of clicking a remove button in the fav list to remove one serie
 function favRemoveHandler(event) {
@@ -137,15 +142,80 @@ function favRemoveAllHandler() {
   for (const liElem of Array.from(listSeriesElem.childNodes))
     liElem.classList.remove("fav");
 }
+//BONUS CLOUD FUNCTIONS
+function randomInRangeFloat(start, end) {
+  return Math.random() * (end - start) + start;
+}
+function randomInRangeInt(start, end) {
+  return Math.floor(Math.random() * (end - start + 1)) + start;
+}
+function vwToPx(vwVal) {
+  return (vwVal * document.documentElement.clientWidth) / 100;
+}
+function pxToVw(pxVal) {
+  return pxVal * (100 / document.documentElement.clientWidth);
+}
+function cloudsIniPos(isGen) {
+  const minClouds = 4;
+  const maxClouds = 8;
+  const minCloudSize = 0.2;
+  const maxCloudSize = 2;
+  for (
+    let i = 0;
+    i < (isGen ? 1 : randomInRangeInt(minClouds, maxClouds));
+    i++
+  ) {
+    const cloudType = randomInRangeInt(1, 4);
+    const cloudEl = document.createElement("object");
+    cloudEl.setAttribute("type", "image/svg+xml");
+    cloudEl.setAttribute("data", `./assets/images/cloud${cloudType}.svg`);
+    cloudEl.classList.add("js-cloud", "cloud");
+    cloudsElem.appendChild(cloudEl);
+    if (isGen) {
+      const scaleVal = randomInRangeFloat(minCloudSize, maxCloudSize);
+      cloudEl.style.top = `${randomInRangeInt(-5, 95)}vh`;
+      cloudEl.style.left = `${-300 * scaleVal - 20}px`;
+      cloudEl.style.transform = `scale(${scaleVal})`;
+      cloudEl.dataset.speed = 1 + 1 / scaleVal;
+      return;
+    }
+  }
+  for (const cloud of cloudsElem.childNodes) {
+    const scaleVal = randomInRangeFloat(minCloudSize, maxCloudSize);
+    cloud.style.top = `${randomInRangeInt(-5, 105)}vh`;
+    cloud.style.left = `${randomInRangeInt(-5, 105)}vw`;
+    cloud.style.left = `${vwToPx(cloud.style.left.slice(0, -2))}px`;
+    cloud.style.transform = `scale(${scaleVal})`;
+    cloud.dataset.speed = 1 + 1 / scaleVal;
+  }
+}
+function cloudMoveHandler() {
+  const speedBase = 5;
+  for (const cloud of cloudsElem.childNodes) {
+    let xPos = parseInt(cloud.style.left.slice(0, -2));
+    cloud.style.left = `${
+      xPos + speedBase * parseFloat(cloud.dataset.speed)
+    }px`;
+    if (pxToVw(xPos) > 100) {
+      cloud.remove();
+      cloudsIniPos(true);
+    }
+  }
+}
+setInterval(cloudMoveHandler, 2000);
+//END BONUS CLOUD
 //This function is onLoad event to <body>, it gets the localStorage favs arr and paints the favs
 function init() {
   if (localStorage.getItem("favIdArr"))
     favs = JSON.parse(localStorage.getItem("favIdArr"));
   if (favs) paintSeries(favs, true);
+  cloudsIniPos(false);
 }
+//This function generates clouds and animates them constantly through the site
 //Event Listeners
 searchButtonElem.addEventListener("click", searchHandler);
 inputElem.addEventListener("submit", searchHandler);
+// inputElem.addEventListener("keyup", searchHandler);
 listSeriesElem.addEventListener("click", favHandler);
 favButton.addEventListener("click", favButtonHandler);
 clearAllButton.addEventListener("click", favRemoveAllHandler);
