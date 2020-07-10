@@ -1,3 +1,12 @@
+::selection {
+  background: $color-aurora-yellow;
+  color: $color-snowStorm-brightest;
+}
+::-moz-selection {
+  background: $color-aurora-yellow;
+  color: $color-snowStorm-brightest;
+}
+
 body {
   font-family: $font-main;
   background-color: $color-polarNight-brightest;
@@ -7,7 +16,7 @@ body {
 
 .main {
   z-index: 2;
-  min-height: 55vh;
+  min-height: 35vh;
   display: flex;
   flex-flow: row;
   justify-content: center;
@@ -54,6 +63,7 @@ body {
 }
 @include tablet {
   .main {
+    min-height: 55vh;
     & ul {
       grid-template-columns: 220px 220px 220px;
     }
@@ -61,6 +71,7 @@ body {
 }
 @include desktop {
   .main {
+    min-height: 45vh;
     & ul {
       grid-template-columns: 220px 220px 220px 220px;
     }

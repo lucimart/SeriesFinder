@@ -374,3 +374,8 @@ button {
 h1 {
   margin: 0;
 }
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
