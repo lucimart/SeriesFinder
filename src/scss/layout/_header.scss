@@ -13,6 +13,11 @@
       position: fixed;
       z-index: 10;
       left: 20px;
+      user-select: none;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -o-user-select: none;
       & object {
         width: 32px;
         transform: rotate(90deg);
@@ -22,6 +27,11 @@
     & .searchContainer {
       display: flex;
       align-items: center;
+      user-select: none;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -o-user-select: none;
       & input {
         width: 200px;
         height: 32px;
@@ -46,7 +56,7 @@
   }
   & .favPanel {
     transition: 0.2s ease-in;
-    transform: translateX(-220px);
+    transform: translateX(-230px);
     overflow-y: scroll;
     -ms-overflow-style: none; /* Internet Explorer 10+ */
     scrollbar-width: none; /* Firefox */
@@ -60,6 +70,9 @@
     left: 0;
     z-index: 4;
     background-color: $color-polarNight-dark;
+    -webkit-box-shadow: 10px 0px 5px -5px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 10px 0px 5px -5px rgba(0, 0, 0, 0.5);
+    box-shadow: 10px 0px 5px -5px rgba(0, 0, 0, 0.5);
     &::-webkit-scrollbar {
       display: none;
     }
@@ -84,6 +97,11 @@
       top: 20px;
       left: 10px;
       z-index: 10;
+      user-select: none;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -o-user-select: none;
     }
     & .favList {
       width: 200px;
@@ -123,6 +141,11 @@
           border-radius: 10px;
           text-align: center;
           vertical-align: middle;
+          user-select: none;
+          -moz-user-select: none;
+          -khtml-user-select: none;
+          -webkit-user-select: none;
+          -o-user-select: none;
         }
       }
       & p {
@@ -151,11 +174,4 @@
 
 .scaleFaved {
   transform: scale(0.8);
-}
-
-.defaultFavAnimation {
-  animation-name: glow;
-  animation-duration: 5s;
-  animation-timing-function: ease-in;
-  animation-iteration-count: infinite;
 }

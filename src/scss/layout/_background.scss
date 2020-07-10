@@ -1,0 +1,65 @@
+.background {
+  .clouds {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    & .cloud {
+      position: fixed;
+      pointer-events: none;
+      width: 250px;
+    }
+  }
+  .stars {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    .star {
+      position: fixed;
+      pointer-events: none;
+    }
+    .star1 {
+      width: 6px;
+    }
+    .star2 {
+      width: 12px;
+    }
+    .star3 {
+      width: 16px;
+    }
+    .star4 {
+      width: 16px;
+    }
+  }
+  .sky {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    & .stripe {
+      width: 100vw;
+    }
+  }
+}

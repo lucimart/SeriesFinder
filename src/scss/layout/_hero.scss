@@ -1,6 +1,11 @@
 .hero {
   display: flex;
   justify-content: center;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
   & h1 {
     z-index: 2;
     font-size: 2rem;
