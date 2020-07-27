@@ -1,35 +1,35 @@
-"use strict";
+'use strict';
 
 // Query Selectors
-const inputElem = document.querySelector(".js-input");
-const searchButtonElem = document.querySelector(".js-search");
-const smallElem = document.querySelector(".js-small");
-const mainElem = document.querySelector(".js-main");
-const favButton = document.querySelector(".js-favButton");
-const favPanel = document.querySelector(".js-favPanel");
-const favList = document.querySelector(".js-favList");
-const clearAllButton = document.querySelector(".js-clearAll");
+const inputElem = document.querySelector('.js-input');
+const searchButtonElem = document.querySelector('.js-search');
+const smallElem = document.querySelector('.js-small');
+const mainElem = document.querySelector('.js-main');
+const favButton = document.querySelector('.js-favButton');
+const favPanel = document.querySelector('.js-favPanel');
+const favList = document.querySelector('.js-favList');
+const clearAllButton = document.querySelector('.js-clearAll');
 
 // vars
 let favs = [];
 
 //script scope created elements
-const listSeriesElem = document.createElement("ul");
-listSeriesElem.classList.add("js-listSeries");
+const listSeriesElem = document.createElement('ul');
+listSeriesElem.classList.add('js-listSeries');
 
 //bonus clouds & stars & sky
-const cloudsElem = document.querySelector(".js-clouds");
-const starsElem = document.querySelector(".js-stars");
-const skyElem = document.querySelector(".js-sky");
+const cloudsElem = document.querySelector('.js-clouds');
+const starsElem = document.querySelector('.js-stars');
+const skyElem = document.querySelector('.js-sky');
 //This function searches on the API whatever is in the input and calls paintSeries()
 function searchHandler(event) {
-  if (localStorage.getItem("favIdArr"))
-    favs = JSON.parse(localStorage.getItem("favIdArr"));
+  if (localStorage.getItem('favIdArr'))
+    favs = JSON.parse(localStorage.getItem('favIdArr'));
   event.preventDefault();
   if (!listSeriesElem.parentElement) mainElem.appendChild(listSeriesElem);
-  listSeriesElem.innerHTML = "";
-  smallElem.classList.add("hidden");
-  fetch(`http://api.tvmaze.com/search/shows?q=${inputElem.value}`)
+  listSeriesElem.innerHTML = '';
+  smallElem.classList.add('hidden');
+  fetch(`https://api.tvmaze.com/search/shows?q=${inputElem.value}`)
     .then((response) => response.json())
     .then((data) => paintSeries(data, false));
   return false;
@@ -38,14 +38,14 @@ function searchHandler(event) {
 //scope of the painting
 function paintSeries(arr, isFavList) {
   if (!isFavList && arr.length === 0) {
-    smallElem.classList.toggle("hidden");
-    smallElem.innerHTML = "There were no results for your search.";
+    smallElem.classList.toggle('hidden');
+    smallElem.innerHTML = 'There were no results for your search.';
     listSeriesElem.remove();
   } else if (isFavList && arr.length === 0) {
     favList.innerHTML = `<p>You haven't faved any series.<br><br>Please search for some series in the search bar and click on it to fav it.</p>`;
     return;
   }
-  if (isFavList) favList.innerHTML = "";
+  if (isFavList) favList.innerHTML = '';
   for (const serie of arr) appendSerieToSerieList(serie, isFavList);
 }
 //This is the function that actually adds the serie element to the normal/fav list by constructing
@@ -57,7 +57,7 @@ function appendSerieToSerieList(serie, isFavList) {
   let id;
   let name;
   let img;
-  elem = document.createElement("li");
+  elem = document.createElement('li');
   if (!isFavList) {
     id = serie.show.id;
     name = serie.show.name;
@@ -66,24 +66,24 @@ function appendSerieToSerieList(serie, isFavList) {
     id = serie.id;
     name = serie.name;
     img = serie.img;
-    let favRemoveButton = document.createElement("button");
-    favRemoveButton.classList.add("favRemove");
-    favRemoveButton.innerHTML = "X";
+    let favRemoveButton = document.createElement('button');
+    favRemoveButton.classList.add('favRemove');
+    favRemoveButton.innerHTML = 'X';
     elem.appendChild(favRemoveButton);
-    favRemoveButton.addEventListener("click", favRemoveHandler);
+    favRemoveButton.addEventListener('click', favRemoveHandler);
   }
-  elem.setAttribute("data-id", `${id}`);
-  serieNameElem = document.createElement("p");
+  elem.setAttribute('data-id', `${id}`);
+  serieNameElem = document.createElement('p');
   serieNameElem.appendChild(document.createTextNode(`${name}`));
-  serieImgElem = document.createElement("img");
-  if (img) serieImgElem.setAttribute("src", `${isFavList ? img : img.medium}`);
+  serieImgElem = document.createElement('img');
+  if (img) serieImgElem.setAttribute('src', `${isFavList ? img : img.medium}`);
   else
     serieImgElem.src = `https://via.placeholder.com/210x295/ffffff/666666/?text=TV`;
-  serieImgElem.setAttribute("alt", `Poster of ${name}`);
+  serieImgElem.setAttribute('alt', `Poster of ${name}`);
   elem.appendChild(serieNameElem);
   elem.appendChild(serieImgElem);
-  if (!isFavList && isSerieFaved(elem, favs)) elem.classList.add("fav");
-  else if (isFavList) elem.classList.add("fav", "scaleFaved");
+  if (!isFavList && isSerieFaved(elem, favs)) elem.classList.add('fav');
+  else if (isFavList) elem.classList.add('fav', 'scaleFaved');
   if (!isFavList) listSeriesElem.appendChild(elem);
   else favList.appendChild(elem);
 }
@@ -96,22 +96,22 @@ function isSerieFaved(serie, favArr) {
 //update the localStorage and paint the favs in its list
 function favHandler(event) {
   let serie;
-  if (event.target.nodeName === "LI") serie = event.target;
-  else if (event.target.nodeName === "UL") return;
+  if (event.target.nodeName === 'LI') serie = event.target;
+  else if (event.target.nodeName === 'UL') return;
   else serie = event.target.parentElement;
   if (isSerieFaved(serie, favs)) {
     favs.splice(indexOfSerieInFav(serie, favs), 1);
-    serie.classList.remove("fav");
+    serie.classList.remove('fav');
   } else {
     favs.push({
       id: serie.dataset.id,
       name: serie.childNodes[0].innerHTML,
       img: serie.childNodes[1].src,
     });
-    serie.classList.add("fav");
+    serie.classList.add('fav');
   }
   favs.sort((a, b) => (a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1));
-  localStorage.setItem("favIdArr", JSON.stringify(favs));
+  localStorage.setItem('favIdArr', JSON.stringify(favs));
   paintSeries(favs, true);
 }
 //This function returns the index of the serie in the favs array, -1 if serie not found
@@ -122,27 +122,27 @@ function indexOfSerieInFav(serie, favArr) {
 }
 //This function toggles different classes corresponding the fav button interaction in the header
 function favButtonHandler() {
-  favButton.classList.toggle("rotFav");
-  favButton.classList.toggle("defaultFavAnimation");
-  favPanel.classList.toggle("favPanelTransition");
+  favButton.classList.toggle('rotFav');
+  favButton.classList.toggle('defaultFavAnimation');
+  favPanel.classList.toggle('favPanelTransition');
 }
 //This function handles the event of clicking a remove button in the fav list to remove one serie
 function favRemoveHandler(event) {
   let id = event.currentTarget.parentNode.dataset.id;
   for (let i = 0; i < favs.length; i++)
     if (favs[i].id === id) favs.splice(i, 1);
-  localStorage.setItem("favIdArr", JSON.stringify(favs));
+  localStorage.setItem('favIdArr', JSON.stringify(favs));
   paintSeries(favs, true);
   for (const liElem of Array.from(listSeriesElem.childNodes))
-    if (liElem.dataset.id === id) liElem.classList.remove("fav");
+    if (liElem.dataset.id === id) liElem.classList.remove('fav');
 }
 //This function handles the event of clicking remove all button, which clears the fav list
 function favRemoveAllHandler() {
   favs = [];
-  localStorage.setItem("favIdArr", JSON.stringify(favs));
+  localStorage.setItem('favIdArr', JSON.stringify(favs));
   paintSeries(favs, true);
   for (const liElem of Array.from(listSeriesElem.childNodes))
-    liElem.classList.remove("fav");
+    liElem.classList.remove('fav');
 }
 //BONUS CLOUD FUNCTIONS
 //Utility function, generates a random floating number between start and end
@@ -176,9 +176,9 @@ function cloudsIniPos(isGen) {
     i++
   ) {
     const cloudType = randomInRangeInt(1, 4);
-    const cloudEl = document.createElement("img");
-    cloudEl.setAttribute("src", `./assets/images/cloud${cloudType}.svg`);
-    cloudEl.classList.add("js-cloud", "cloud");
+    const cloudEl = document.createElement('img');
+    cloudEl.setAttribute('src', `./assets/images/cloud${cloudType}.svg`);
+    cloudEl.classList.add('js-cloud', 'cloud');
     cloudsElem.appendChild(cloudEl);
     if (isGen) {
       const scaleVal = randomInRangeFloat(minCloudSize, maxCloudSize);
@@ -225,9 +225,9 @@ function starsIniPos() {
   const opacMax = 0.35;
   for (let i = 0; i < randomInRangeInt(minStars, maxStars); i++) {
     const starType = randomInRangeInt(1, 4);
-    const starEl = document.createElement("img");
-    starEl.setAttribute("src", `./assets/images/star${starType}.svg`);
-    starEl.classList.add("js-star", "star", `star${starType}`);
+    const starEl = document.createElement('img');
+    starEl.setAttribute('src', `./assets/images/star${starType}.svg`);
+    starEl.classList.add('js-star', 'star', `star${starType}`);
     starsElem.appendChild(starEl);
   }
   for (const star of starsElem.childNodes) {
@@ -244,12 +244,12 @@ function starLitHandler() {
   const chanceOfAnimating = 0.1;
   for (const star of starsElem.childNodes) {
     if (randomInRangeFloat(0, 1) >= 1 - chanceOfAnimating) {
-      star.classList.add("starAnimation");
-      star.addEventListener("webkitAnimationEnd", (ev) =>
-        ev.currentTarget.classList.remove("starAnimation")
+      star.classList.add('starAnimation');
+      star.addEventListener('webkitAnimationEnd', (ev) =>
+        ev.currentTarget.classList.remove('starAnimation')
       );
-      star.addEventListener("animationend", (ev) =>
-        ev.currentTarget.classList.remove("starAnimation")
+      star.addEventListener('animationend', (ev) =>
+        ev.currentTarget.classList.remove('starAnimation')
       );
     }
   }
@@ -259,9 +259,9 @@ setInterval(starLitHandler, 5000);
 //Bonus STARS END
 //BONUS Stepped background gradient START
 function hex(c) {
-  var s = "0123456789abcdef";
+  var s = '0123456789abcdef';
   var i = parseInt(c);
-  if (i == 0 || isNaN(c)) return "00";
+  if (i == 0 || isNaN(c)) return '00';
   i = Math.round(Math.min(Math.max(0, i), 255));
   return s.charAt((i - (i % 16)) / 16) + s.charAt(i % 16);
 }
@@ -271,7 +271,7 @@ function convertToHex(rgb) {
 }
 /* Remove '#' in color hex string */
 function trim(s) {
-  return s.charAt(0) == "#" ? s.substring(1, 7) : s;
+  return s.charAt(0) == '#' ? s.substring(1, 7) : s;
 }
 /* Convert a hex string to an RGB triplet */
 function convertToRGB(hex) {
@@ -313,10 +313,10 @@ function genSky() {
   //Color Gradient generated by https://stackoverflow.com/a/32257791
   //Using generateColor("#4c566a", "#2e3440", 30)
   // $$color-polarNight-darkest to $color-polarNight-brightest
-  const gradient = generateColor("#4c566a", "#2e3440", 25);
+  const gradient = generateColor('#4c566a', '#2e3440', 25);
   for (let i = 0; i < gradient.length; i++) {
-    const skyStripe = document.createElement("div");
-    skyStripe.classList.add("stripe");
+    const skyStripe = document.createElement('div');
+    skyStripe.classList.add('stripe');
     skyStripe.style.backgroundColor = `#${gradient[i]}`;
     skyStripe.style.height = `${100 / gradient.length}vh`;
     skyElem.appendChild(skyStripe);
@@ -325,8 +325,8 @@ function genSky() {
 //BONUS Stepped background gradient END
 //This function is onLoad event to <body>, it gets the localStorage favs arr and paints the favs
 function init() {
-  if (localStorage.getItem("favIdArr"))
-    favs = JSON.parse(localStorage.getItem("favIdArr"));
+  if (localStorage.getItem('favIdArr'))
+    favs = JSON.parse(localStorage.getItem('favIdArr'));
   if (favs) paintSeries(favs, true);
   genSky();
   cloudsIniPos(false);
@@ -334,9 +334,9 @@ function init() {
 }
 //This function generates clouds and animates them constantly through the site
 //Event Listeners
-searchButtonElem.addEventListener("click", searchHandler);
-inputElem.addEventListener("submit", searchHandler);
-inputElem.addEventListener("keyup", searchHandler);
-listSeriesElem.addEventListener("click", favHandler);
-favButton.addEventListener("click", favButtonHandler);
-clearAllButton.addEventListener("click", favRemoveAllHandler);
+searchButtonElem.addEventListener('click', searchHandler);
+inputElem.addEventListener('submit', searchHandler);
+inputElem.addEventListener('keyup', searchHandler);
+listSeriesElem.addEventListener('click', favHandler);
+favButton.addEventListener('click', favButtonHandler);
+clearAllButton.addEventListener('click', favRemoveAllHandler);
